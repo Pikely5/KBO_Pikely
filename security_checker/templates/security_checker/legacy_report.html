@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Legacy Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .critical { color: red; font-weight: bold; }
+        .warning { color: orange; }
+        h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Результаты проверки (старый формат)</h2>
+    {% if metrics.total_findings %}
+        <p>Уровень риска: {{ metrics.risk_score }}/100</p>
+        <p>Соответствие: {{ metrics.compliance_percent }}%</p>
+        <ul>
+        {% for finding in findings %}
+            <li class="{% if finding.severity == 'CRITICAL' %}critical{% else %}warning{% endif %}">
+                [{{ finding.severity }}] {{ finding.resource }}: {{ finding.message }}<br>
+                <small>Рекомендация: {{ finding.remediation }} | Ответственный: {{ finding.responsible }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нарушений не обнаружено.</p>
+    {% endif %}
+    <p><em>Отчёт сгенерирован через адаптер совместимости.</em></p>
+</body>
+</html>

@@ -221,3 +221,23 @@ for sub in sub_cloud_objects:
     issues = CloudComplianceData.objects.filter(cloud=sub, is_compliant=False).count()
     status = "🔴" if issues > 0 else "🟢"
     print(f"   {status} {sub.name} ({issues} проблем)")
+    # === Создание учётных записей пользователей ===
+    from django.contrib.auth.models import User
+
+    # Администратор (суперпользователь, полные права)
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(
+            username='admin',
+            email='admin@example.com',
+            password='admin123'
+        )
+        print("Создан суперпользователь: admin / admin123")
+
+    # Обычный пользователь (базовые права)
+    if not User.objects.filter(username='user').exists():
+        User.objects.create_user(
+            username='user',
+            email='user@example.com',
+            password='user12345'
+        )
+        print("Создан обычный пользователь: user / user12345")
