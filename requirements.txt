@@ -1,0 +1,2 @@
+django>=4.2
+matplotlib>=3.5.0

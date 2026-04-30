@@ -1,0 +1,130 @@
+[
+  {
+    "model": "security_checker.cloudprovider",
+    "pk": 1,
+    "fields": {
+      "name": "Yandex Cloud",
+      "description": "Облачная платформа Яндекс",
+      "region": "RU",
+      "is_active": true
+    }
+  },
+  {
+    "model": "security_checker.cloudprovider",
+    "pk": 2,
+    "fields": {
+      "name": "VK Cloud",
+      "description": "Облачная платформа VK",
+      "region": "RU",
+      "is_active": true
+    }
+  },
+  {
+    "model": "security_checker.cloudprovider",
+    "pk": 3,
+    "fields": {
+      "name": "SberCloud",
+      "description": "Облачная платформа Сбера",
+      "region": "RU",
+      "is_active": true
+    }
+  },
+  {
+    "model": "security_checker.securityprotocol",
+    "pk": 1,
+    "fields": {
+      "protocol_id": "GOST-R-57580",
+      "name": "Защита информации в облачных сервисах",
+      "category": "COMPLIANCE",
+      "description": "Требования к защите информации в облачных сервисах",
+      "standard": "ГОСТ Р 57580",
+      "severity_on_fail": "CRITICAL",
+      "remediation_template": "Привести сервис в соответствие с ГОСТ Р 57580",
+      "responsibility": "provider",
+      "is_active": true,
+      "priority": 1
+    }
+  },
+  {
+    "model": "security_checker.securityprotocol",
+    "pk": 2,
+    "fields": {
+      "protocol_id": "152-ФЗ",
+      "name": "О персональных данных",
+      "category": "COMPLIANCE",
+      "description": "Федеральный закон о защите персональных данных",
+      "standard": "152-ФЗ",
+      "severity_on_fail": "CRITICAL",
+      "remediation_template": "Обеспечить соответствие требованиям 152-ФЗ",
+      "responsibility": "shared",
+      "is_active": true,
+      "priority": 1
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 1,
+    "fields": {
+      "cloud": 1,
+      "protocol": 1,
+      "is_compliant": true,
+      "compliance_level": 95,
+      "notes": "Сертифицирован по ГОСТ Р 57580"
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 2,
+    "fields": {
+      "cloud": 1,
+      "protocol": 2,
+      "is_compliant": true,
+      "compliance_level": 90,
+      "notes": "Соответствует 152-ФЗ"
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 3,
+    "fields": {
+      "cloud": 2,
+      "protocol": 1,
+      "is_compliant": false,
+      "compliance_level": 45,
+      "notes": "Требуется доработка"
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 4,
+    "fields": {
+      "cloud": 2,
+      "protocol": 2,
+      "is_compliant": true,
+      "compliance_level": 85,
+      "notes": "Частичное соответствие"
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 5,
+    "fields": {
+      "cloud": 3,
+      "protocol": 1,
+      "is_compliant": false,
+      "compliance_level": 30,
+      "notes": "Не сертифицирован"
+    }
+  },
+  {
+    "model": "security_checker.cloudcompliancedata",
+    "pk": 6,
+    "fields": {
+      "cloud": 3,
+      "protocol": 2,
+      "is_compliant": false,
+      "compliance_level": 50,
+      "notes": "Нарушения 152-ФЗ"
+    }
+  }
+]

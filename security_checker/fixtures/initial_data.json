@@ -1,0 +1,32 @@
+[
+  {
+    "model": "security_checker.testdataset",
+    "pk": 1,
+    "fields": {
+      "name": "Стандартные хранилища",
+      "dataset_type": "STORAGE",
+      "description": "Тестовый набор публичных и приватных хранилищ",
+      "test_data": {"buckets": [{"name": "customer-data", "public": true, "has_pii": true}, {"name": "public-logs", "public": true, "has_pii": false}, {"name": "private-backup", "public": false, "has_pii": true}]},
+      "expected_results": {"critical_findings": 1, "warning_findings": 1},
+      "is_active": true,
+      "created_at": "2025-01-15T10:00:00Z",
+      "updated_at": "2025-01-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "security_checker.securitycheckrule",
+    "pk": 1,
+    "fields": {
+      "rule_id": "SEC-001",
+      "name": "Проверка публичного доступа к данным с ПД",
+      "category": "STORAGE",
+      "description": "Выявление хранилищ с публичным доступом, содержащих персональные данные",
+      "severity": "CRITICAL",
+      "check_logic": "Проверка комбинации флагов public=true и has_pii=true",
+      "remediation_template": "Немедленно отключить публичный доступ к хранилищу {resource_name}",
+      "responsibility": "consumer",
+      "is_enabled": true,
+      "priority": 1
+    }
+  }
+]
