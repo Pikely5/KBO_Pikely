@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 15s      # Как часто собирать метрики
+  evaluation_interval: 15s  # Как часто оценивать правила алертинга
+
+# Правила алертинга
+rule_files:
+  - "alerts.yml"
+
+# Цели для сбора метрик
+scrape_configs:
+  # Мониторинг самого Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Мониторинг вашего контейнера безопасности облака
+  - job_name: 'security-checker'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['security_app:8000']  # Имя сервиса из docker-compose.yml
+
+  # Мониторинг Docker-контейнеров через cAdvisor
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+  # Мониторинг системных метрик хоста
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']

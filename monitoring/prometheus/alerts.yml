@@ -1,0 +1,27 @@
+groups:
+  - name: security_checker_alerts
+    interval: 30s
+    rules:
+      # Алерт: высокое время отклика
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(request_latency_seconds_bucket[5m])) > 0.05
+        for: 30s
+        annotations:
+          summary: "Высокая задержка API"
+          description: "95-й перцентиль времени отклика {{ $value }}с превышает 0.05с"
+
+      # Алерт: высокий уровень риска
+      - alert: HighRiskScore
+        expr: risk_score > 70
+        for: 1m
+        annotations:
+          summary: "Высокий уровень риска"
+          description: "Уровень риска составляет {{ $value }}%"
+
+      # Алерт: контейнер недоступен
+      - alert: SecurityCheckerDown
+        expr: up{job="security-checker"} == 0
+        for: 2m
+        annotations:
+          summary: "Контейнер недоступен"
+          description: "Контейнер безопасности не отвечает более 2 минут"

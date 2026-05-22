@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-pod
+  labels:
+    app: security-lab
+spec:
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+
+    - name: security-app
+      image: django-security-app
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 8000
+      env:
+        - name: DB_NAME
+          value: security_db
+        - name: DB_USER
+          value: admin
+        - name: DB_PASSWORD
+          value: securepass
+        - name: DB_HOST
+          value: localhost
+
+    - name: postgres
+      image: postgres:13
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_DB
+          value: security_db
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: securepass
+
+    - name: pgadmin
+      image: dpage/pgadmin4:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+      env:
+        - name: PGADMIN_DEFAULT_EMAIL
+          value: admin@example.com
+        - name: PGADMIN_DEFAULT_PASSWORD
+          value: adminpass
+      securityContext:
+        runAsUser: 0
